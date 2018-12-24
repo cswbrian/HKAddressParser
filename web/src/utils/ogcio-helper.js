@@ -22,19 +22,28 @@ const keys = {
     [OGCIO_KEY_BUILDING_NAME]: 'Building Name',
     // level 2 keys
     [`${OGCIO_KEY_DISTRICT}.DcDistrict`]: '區議會分區',
+    [`${OGCIO_KEY_STREET}.StreetName`]: 'Street Name',
+    [`${OGCIO_KEY_STREET}.BuildingNoFrom`]: 'Street No. From',
+    [`${OGCIO_KEY_STREET}.BuildingNoTo`]: 'Street No. To',
+    [`${OGCIO_KEY_ESTATE}.EstateName`]: 'Estate Name',
+
   },
   chi: {
     // level 1 keys
     [OGCIO_KEY_BLOCK]: '座數',
     [OGCIO_KEY_PHASE]: '期數',
     [OGCIO_KEY_ESTATE]: '屋邨',
-    [OGCIO_KEY_VILLAGE]: '村',
+    [OGCIO_KEY_VILLAGE]: '鄉村',
     [OGCIO_KEY_REGION]: '區域',
     [OGCIO_KEY_DISTRICT]: '地區',
     [OGCIO_KEY_STREET]: '街道',
     [OGCIO_KEY_BUILDING_NAME]: '大廈名稱',
     // level 2 keys
     [`${OGCIO_KEY_DISTRICT}.DcDistrict`]: '區議會分區',
+    [`${OGCIO_KEY_STREET}.StreetName`]: '街道',
+    [`${OGCIO_KEY_STREET}.BuildingNoFrom`]: '街號',
+    [`${OGCIO_KEY_STREET}.BuildingNoTo`]: '街號',
+    [`${OGCIO_KEY_ESTATE}.EstateName`]: '屋邨',
   }
 }
 
@@ -42,12 +51,12 @@ function textForKey(key, lang) {
   return keys[lang]
     ? (keys[lang][key]
       ? keys[lang][key]
-      : '')
-    : '';
+      : key)
+    : key;
 }
 
 function textForValue(record, key, lang) {
-  
+
   if (!record[lang]) {
     return '';
   }
@@ -55,8 +64,19 @@ function textForValue(record, key, lang) {
   if (typeof(record[lang][key]) === 'string') {
     return record[lang][key];
   }
+  
+  const obj = Object.values(record[lang][key]);
+  let val = obj[0] || '';
 
-  return Object.values(record[lang][key]).join();
+  if(obj[1]) {
+    if(obj[1].PhaseName) {
+      val = val + (val == '' ? '' : ', ') + obj[1].PhaseName;
+    } else {
+      val = val + (val == '' ? '' : ', ') + obj[1];
+    }
+  }
+
+  return val;
 }
 
 
@@ -126,4 +146,4 @@ export default {
   textForValue,
   fullEnglishAddressFromResult,
   fullChineseAddressFromResult
-} 
+}

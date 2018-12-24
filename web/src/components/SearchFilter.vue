@@ -1,8 +1,9 @@
 <template>
     <v-container>
         <v-layout row wrap>
-            <v-flex xs6 sm4 md4
-              v-bind:key="item.key"
+            <v-flex
+              :xs3="xs3"
+              :key="item.key"
               v-for="item in filterOptions">
               <v-checkbox
                     :label="item.value"
@@ -22,7 +23,8 @@ import {
 
 export default {
   props: {
-    filterOptions: Array
+    filterOptions: Array,
+    xs3: Boolean
   },
   data: () => ({
   }),

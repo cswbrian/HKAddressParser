@@ -20,7 +20,7 @@
             <v-expansion-panel popout>
               <v-expansion-panel-content>
                 <div slot="header">進階選項</div>
-                <SearchFilter :filterOptions.sync="filterOptions"/>
+                <SearchFilter :filterOptions.sync="filterOptions" :xs3="true" />
               </v-expansion-panel-content>
             </v-expansion-panel>
 
@@ -114,7 +114,7 @@ export default {
       trackSingleSearch(this, this.address);
       const res = await fetch(URL, {
         headers: {
-          Accept: "application/json",
+          "Accept": "application/json",
           "Accept-Language": "en,zh-Hant",
           "Accept-Encoding": "gzip"
         }
